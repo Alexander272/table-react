@@ -21,6 +21,11 @@ function App() {
         fetchComments()
     }, [fetchComments])
 
+    const changePageHandler = (event: React.MouseEvent<HTMLDivElement>) => {
+        const { page } = (event.target as HTMLDivElement).dataset
+        page && setCurrentPage(+page)
+    }
+
     const renderPagination = () => {
         let btns = []
         for (let i = 0; i < photos!.length; i = i + step) {
@@ -28,12 +33,23 @@ function App() {
                 <div
                     key={i / step}
                     className={`btn ${currentPage === i / step + 1 ? 'btn__active' : null}`}
+                    data-page={i / step + 1}
+                    onClick={changePageHandler}
                 >
                     <p className="btn__text">{i / step + 1}</p>
                 </div>
             )
         }
         return btns
+    }
+
+    const renderRow = () => {
+        if (photos) {
+            let newPhotos = photos.concat()
+            newPhotos.copyWithin(0, (currentPage - 1) * step, (currentPage - 1) * step + step)
+            newPhotos.splice(step)
+            return newPhotos.map(p => <Row key={p.id} photo={p} />)
+        }
     }
 
     return (
@@ -44,7 +60,7 @@ function App() {
                         {photos &&
                             Object.keys(photos[0]).map(key => <TableHeader key={key} text={key} />)}
                     </div>
-                    {photos && photos.map(p => <Row key={p.id} photo={p} />)}
+                    {photos && renderRow()}
                 </div>
                 {photos && photos.length > step && (
                     <div className="bottomBar">{renderPagination()}</div>
