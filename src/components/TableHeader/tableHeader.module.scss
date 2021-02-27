@@ -1,6 +1,7 @@
 .header {
     margin: 5px 10px;
     flex-basis: 20%;
+    cursor: pointer;
 }
 
 .title {
@@ -8,5 +9,5 @@
     font-weight: bold;
     color: #0051ca;
     text-align: center;
-    cursor: pointer;
+    pointer-events: none;
 }

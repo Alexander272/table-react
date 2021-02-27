@@ -5,9 +5,18 @@ import { PhotoType } from './types/photos'
 
 const step = 5
 
+type FilterState = {
+    title: string | null
+    sort: string
+}
+
 function App() {
     const [photos, setPhotos] = useState<PhotoType[] | null>(null)
     const [currentPage, setCurrentPage] = useState(1)
+    const [filter, setFilter] = useState<FilterState>({
+        title: null,
+        sort: 'asc',
+    })
 
     const fetchComments = useCallback(async () => {
         try {
@@ -24,6 +33,32 @@ function App() {
     const changePageHandler = (event: React.MouseEvent<HTMLDivElement>) => {
         const { page } = (event.target as HTMLDivElement).dataset
         page && setCurrentPage(+page)
+    }
+
+    const filterHandler = (event: React.MouseEvent<HTMLDivElement>) => {
+        const { title } = (event.target as HTMLDivElement).dataset
+        if (title) {
+            title === filter.title
+                ? setFilter(prev => ({ ...prev, sort: 'desc' }))
+                : setFilter({ title, sort: 'asc' })
+            setPhotos(prev => {
+                const newState = prev
+                newState?.sort((a, b) => {
+                    if (title === 'id' || title === 'albumId') {
+                        return a[title] - b[title]
+                    } else if (title === 'title' || title === 'url' || title === 'thumbnailUrl') {
+                        let A = a[title].toLowerCase(),
+                            B = b[title].toLowerCase()
+                        if (A < B) return -1
+                        if (A > B) return 1
+                        return 0
+                    }
+                    return 0
+                })
+                if (title === filter.title) return newState?.reverse() || []
+                return newState || []
+            })
+        }
     }
 
     const renderPagination = () => {
@@ -58,7 +93,14 @@ function App() {
                 <div className="table__container">
                     <div className="table__header">
                         {photos &&
-                            Object.keys(photos[0]).map(key => <TableHeader key={key} text={key} />)}
+                            Object.keys(photos[0]).map(key => (
+                                <TableHeader
+                                    onClick={filterHandler}
+                                    key={key}
+                                    text={key}
+                                    icon={filter.title === key ? filter.sort : null}
+                                />
+                            ))}
                     </div>
                     {photos && renderRow()}
                 </div>
