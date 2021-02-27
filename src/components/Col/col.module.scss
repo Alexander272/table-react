@@ -1,0 +1,11 @@
+.col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // max-width: 20%;
+    flex-basis: 20%;
+    margin: 0 10px;
+    box-sizing: border-box;
+    text-align: center;
+    word-break: break-word;
+}

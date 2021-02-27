@@ -1,0 +1,11 @@
+$mainBody: #e6e4e4;
+$mainColor: #0066ff;
+$fontColor: #0d1520;
+
+.row {
+    border-bottom: 1px solid $mainColor;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: -1px;
+}

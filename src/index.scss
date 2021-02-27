@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+
+$mainBody: #e6e4e4;
+$mainColor: #0066ff;
+$fontColor: #0d1520;
+$fontFamily: 'Comfortaa', cursive;
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+ol,
+ul {
+    list-style: none;
+}
+a {
+    outline: none;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+}
+.wrapper {
+    width: 100%;
+    min-width: 320px;
+    font-family: $fontFamily;
+    background: $mainBody;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+}
+.container {
+    // display: flex;
+    width: 80%;
+    margin: 50px auto;
+    flex-grow: 1;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table {
+    &__container {
+    }
+    &__header {
+        border-bottom: 1px solid $mainColor;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: -1px;
+    }
+}
+
+.bottomBar {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 25px 15px;
+    box-sizing: border-box;
+}
+.btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s ease-in-out;
+    border: 1px solid $mainColor;
+    border-radius: 8px;
+    margin: 0 10px;
+    color: $mainColor;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $mainColor;
+        color: #fff;
+    }
+
+    &__active {
+        background-color: $mainColor;
+        color: #fff;
+    }
+
+    &__text {
+        pointer-events: none;
+        font-size: 1.2rem;
+    }
+}
